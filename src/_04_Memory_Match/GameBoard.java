@@ -19,7 +19,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	static Card secondSelectedCard = null;
 
 	// 1. Initialize TOTAL_CARDS to 2;
-	static int TOTAL_CARDS = 52;
+	static int TOTAL_CARDS = 2;
 
 	ArrayList<Card> cards;
 
@@ -35,7 +35,7 @@ public class GameBoard extends JFrame implements ActionListener {
 	public void setup() {
 		gameClock = new Timer(1000, this);
 		updateTimer = new Timer(750, this);
-		TOTAL_CARDS = 2;
+		TOTAL_CARDS = 52;
 		// Can't play the game if there isn't an even number of cards
 		if (TOTAL_CARDS % 2 != 0) {
 			System.out.println("ERROR: Odd number of total cards, " + TOTAL_CARDS);
@@ -49,8 +49,8 @@ public class GameBoard extends JFrame implements ActionListener {
 		// Also, add action listeners to each Card object and then add each
 		// of the Card objects to the ArrayList of Cards.
 		for (int j = 0; j < 4; j++) {
-			for (int i = 0; i < TOTAL_CARDS/4; i++) {
-Card card1 = new Card(1);
+			for (int i = 0; i < (TOTAL_CARDS/4); i++) {
+Card card1 = new Card(2+i);
 card1.addActionListener(this);
 cards.add(card1);
 		}
@@ -71,6 +71,10 @@ for (int i = 0; i < cards.size(); i++) {
 setupGui(cards);
 		// 8. Call the startGame() method to start the game
 startGame();
+for (int i = 0; i < cards.size(); i++) {
+	System.out.println(cards.get(i).getValue());
+}
+
 	}
 
 	// 9. Fill in the drawCards method to draw all the cards in the ArrayList.
