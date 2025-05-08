@@ -7,5 +7,6 @@ public class CaliforniaWeatherRunner {
     
     public static void main(String[] args) {
         new CaliforniaWeather().start();
+        new CaliforniaWeather().setup();
     }
 }

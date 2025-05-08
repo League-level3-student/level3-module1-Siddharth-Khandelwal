@@ -1,6 +1,12 @@
 package _08_California_Weather;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /*
  * OBJECTIVE:
@@ -27,8 +33,12 @@ import java.util.HashMap;
  * temperature, you can get a free API key at: https://openweathermap.org/api
  */
 
-public class CaliforniaWeather {
-    
+public class CaliforniaWeather implements ActionListener {
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
+    JButton button = new JButton("Search");
+    JButton button2 = new JButton("Specify");
+    JButton button3 = new JButton("Enter");
     void start() {
         HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
         
@@ -42,4 +52,27 @@ public class CaliforniaWeather {
             System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
         }
     }
+
+	public void setup() {
+		frame.add(panel);
+		panel.add(button);
+		frame.setVisible(true);
+		frame.pack();
+		button.addActionListener(this);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton pressed = (JButton)e.getSource();
+		if(pressed == button) {
+			
+		}
+		if(pressed == button2) {
+			
+		}
+		if(pressed == button3) {
+			
+		}
+	}
 }
