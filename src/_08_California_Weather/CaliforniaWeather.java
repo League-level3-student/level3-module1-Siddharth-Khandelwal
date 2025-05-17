@@ -3,10 +3,14 @@ package _08_California_Weather;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -40,7 +44,7 @@ import javax.swing.JPanel;
 public class CaliforniaWeather implements ActionListener {
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
-	JButton button = new JButton("   -  Search For A City  -   ");
+	JButton button;
 	JButton button2 = new JButton("   -  Specify A Weather Condition  -   ");
 	JButton button3 = new JButton("   -  Enter a Temperature Range  -   ");
 
@@ -60,6 +64,34 @@ public class CaliforniaWeather implements ActionListener {
 	}
 
 	public void setup() {
+
+		try {
+			Image calMap = ImageIO.read(CaliforniaWeather.class.getResource("californiaMapSimple.jpeg"));
+			ImageIcon iccon = new ImageIcon(calMap);
+			button = new JButton(iccon);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Image calMapp = ImageIO.read(CaliforniaWeather.class.getResource("weatherSum.jpeg"));
+			ImageIcon icccon = new ImageIcon(calMapp);
+			button2 = new JButton(icccon);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Image calMapp = ImageIO.read(CaliforniaWeather.class.getResource("thermy.jpeg"));
+			ImageIcon icccon = new ImageIcon(calMapp);
+			button3 = new JButton(icccon);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		button.setText("Search For a City");
+		button2.setText("Specify a Weather Condition");
+		button3.setText("Enter a Temperature Range");
 		frame.add(panel);
 		panel.add(button);
 		panel.add(button2);
@@ -70,7 +102,7 @@ public class CaliforniaWeather implements ActionListener {
 		button.setBackground(Color.LIGHT_GRAY);
 		button2.setBackground(Color.LIGHT_GRAY);
 		button3.setBackground(Color.LIGHT_GRAY);
-		frame.setSize(500, 500);
+		frame.setSize(1200, 175);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -84,13 +116,16 @@ public class CaliforniaWeather implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton pressed = (JButton) e.getSource();
 		if (pressed == button) {
-			String city = JOptionPane.showInputDialog("Enter a City");
+			String city = JOptionPane.showInputDialog("Enter a City in California");
 			String bob = Utilities.capitalizeWords(city);
 			WeatherData ciudad = Utilities.getWeatherData().get(bob);
-			Double give = ciudad.temperatureF;
-			JOptionPane.showMessageDialog(null,
-					"The temperature in " + bob + ", California is " + give + " degrees Farenheit.");
-
+			if (ciudad != null) {
+				Double give = ciudad.temperatureF;
+				JOptionPane.showMessageDialog(frame,
+						"The temperature in " + bob + ", California is " + give + " degrees Farenheit.");
+			} else {
+				JOptionPane.showMessageDialog(null, "Unable to find Weather Data for " + city + ", California.");
+			}
 		}
 		if (pressed == button2) {
 			String condition = JOptionPane.showInputDialog("Enter a Weather Condition");
