@@ -47,6 +47,7 @@ public class CaliforniaWeather implements ActionListener {
 	JButton button;
 	JButton button2 = new JButton("   -  Specify A Weather Condition  -   ");
 	JButton button3 = new JButton("   -  Enter a Temperature Range  -   ");
+	Utilities bruh = new Utilities();
 
 	void start() {
 		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
@@ -124,19 +125,42 @@ public class CaliforniaWeather implements ActionListener {
 				JOptionPane.showMessageDialog(frame,
 						"The temperature in " + bob + ", California is " + give + " degrees Farenheit.");
 			} else {
-				JOptionPane.showMessageDialog(null, "Unable to find Weather Data for " + city + ", California.");
+				JOptionPane.showMessageDialog(null, "Unable to find Weather Data for " + bob + ", California.");
 			}
 		}
 		if (pressed == button2) {
 			String condition = JOptionPane.showInputDialog("Enter a Weather Condition");
+			String finale ="";
+			for(String i : bruh.getWeatherData().keySet()) {
+				
+				String city = JOptionPane.showInputDialog("Enter a City in California");
+				String bob = Utilities.capitalizeWords(city);
+				WeatherData ciudad = Utilities.getWeatherData().get(bob);
+				if (ciudad != null) {
+					String give = ciudad.weatherSummary;
+					if(give == condition) {
+						finale+=bob;
+					}
+				
+			}
+				JOptionPane.showMessageDialog(null, "The cities with "+condition+" conditions are "+finale+".");
+				
 
 		}
 		if (pressed == button3) {
 			String minName = JOptionPane.showInputDialog("Enter a Minimum Temperature");
 			String maxName = JOptionPane.showInputDialog("Enter a Maximum Temperature");
-
+			
 			int minimum = Integer.parseInt(minName);
 			int maximum = Integer.parseInt(maxName);
+			
+			if(minimum > maximum) {
+				JOptionPane.showMessageDialog(null, "The value entered as the minimum must be lower than the maximum.");
+			}else {
+				JOptionPane.showMessageDialog(null, ""+"have temperatures between "+minimum+" and "+maximum+".");
+			}
+			
+			
 		}
 	}
 }
