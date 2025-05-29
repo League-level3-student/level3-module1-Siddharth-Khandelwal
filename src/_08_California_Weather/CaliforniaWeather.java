@@ -47,7 +47,7 @@ public class CaliforniaWeather implements ActionListener {
 	JButton button;
 	JButton button2 = new JButton("   -  Specify A Weather Condition  -   ");
 	JButton button3 = new JButton("   -  Enter a Temperature Range  -   ");
-	Utilities bruh = new Utilities();
+	Utilities obj = new Utilities();
 
 	void start() {
 		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
@@ -130,37 +130,46 @@ public class CaliforniaWeather implements ActionListener {
 		}
 		if (pressed == button2) {
 			String condition = JOptionPane.showInputDialog("Enter a Weather Condition");
-			String finale ="";
-			for(String i : bruh.getWeatherData().keySet()) {
-				
-				String city = JOptionPane.showInputDialog("Enter a City in California");
-				String bob = Utilities.capitalizeWords(city);
-				WeatherData ciudad = Utilities.getWeatherData().get(bob);
+			String finale = "";
+			for (String i : Utilities.getWeatherData().keySet()) {
+				WeatherData ciudad = Utilities.getWeatherData().get(i);
 				if (ciudad != null) {
 					String give = ciudad.weatherSummary;
-					if(give == condition) {
-						finale+=bob;
+					System.out.println(give);
+					if (give.equalsIgnoreCase(condition)) {
+						finale += i + ", ";
 					}
-				
+
+				}
 			}
-				JOptionPane.showMessageDialog(null, "The cities with "+condition+" conditions are "+finale+".");
-				
+			JOptionPane.showMessageDialog(null, "The cities with " + condition + " conditions are " + finale + ".");
 
 		}
+
 		if (pressed == button3) {
-			String minName = JOptionPane.showInputDialog("Enter a Minimum Temperature");
-			String maxName = JOptionPane.showInputDialog("Enter a Maximum Temperature");
-			
+			String minName = JOptionPane.showInputDialog("Enter a Minimum Temperature (Fahrenheit)");
+			String maxName = JOptionPane.showInputDialog("Enter a Maximum Temperature (Fahrenheit)");
+
 			int minimum = Integer.parseInt(minName);
 			int maximum = Integer.parseInt(maxName);
-			
-			if(minimum > maximum) {
-				JOptionPane.showMessageDialog(null, "The value entered as the minimum must be lower than the maximum.");
-			}else {
-				JOptionPane.showMessageDialog(null, ""+"have temperatures between "+minimum+" and "+maximum+".");
+			String finalee = "";
+			for (String i : Utilities.getWeatherData().keySet()) {
+				WeatherData ciudad = Utilities.getWeatherData().get(i);
+				if (ciudad != null) {
+					double give = ciudad.temperatureF;
+					if (give <= maximum && give >= minimum) {
+						finalee += i + ", ";
+					}
+
+				}
 			}
-			
-			
+			if (minimum > maximum) {
+				JOptionPane.showMessageDialog(null, "The value entered as the minimum must be lower than the maximum.");
+			} else {
+				JOptionPane.showMessageDialog(null, "The cities that have temperatures between " + minimum + " and " + maximum + " are "+finalee+".");
+			}
+
 		}
+
 	}
 }
