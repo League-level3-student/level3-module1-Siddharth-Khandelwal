@@ -129,6 +129,7 @@ public class CaliforniaWeather implements ActionListener {
 			}
 		}
 		if (pressed == button2) {
+			int wordCount = 0; 
 			String condition = JOptionPane.showInputDialog("Enter a Weather Condition");
 			String finale = "";
 			for (String i : Utilities.getWeatherData().keySet()) {
@@ -137,7 +138,12 @@ public class CaliforniaWeather implements ActionListener {
 					String give = ciudad.weatherSummary;
 					System.out.println(give);
 					if (give.equalsIgnoreCase(condition)) {
+						wordCount++;
 						finale += i + ", ";
+						if(wordCount == 10) {
+							finale += "\n";
+							wordCount = 0;
+						}
 					}
 
 				}
@@ -147,6 +153,8 @@ public class CaliforniaWeather implements ActionListener {
 		}
 
 		if (pressed == button3) {
+			
+			int WordCount = 0;
 			String minName = JOptionPane.showInputDialog("Enter a Minimum Temperature (Fahrenheit)");
 			String maxName = JOptionPane.showInputDialog("Enter a Maximum Temperature (Fahrenheit)");
 
@@ -159,6 +167,11 @@ public class CaliforniaWeather implements ActionListener {
 					double give = ciudad.temperatureF;
 					if (give <= maximum && give >= minimum) {
 						finalee += i + ", ";
+						WordCount++;
+						if(WordCount == 10) {
+							finalee+="\n";
+							WordCount = 0;
+						}
 					}
 
 				}
