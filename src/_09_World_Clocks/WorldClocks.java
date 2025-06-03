@@ -1,5 +1,6 @@
 package _09_World_Clocks;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -50,6 +51,7 @@ public class WorldClocks implements ActionListener {
 	String city;
 	String dateStr;
 	String timeStr;
+	String jjjj = "";
 
 	public WorldClocks() {
 		clockUtil = new ClockUtilities();
@@ -57,6 +59,7 @@ public class WorldClocks implements ActionListener {
 		// The format for the city must be: city, country (all caps)
 		city = JOptionPane.showInputDialog("Enter a City, then country, all caps. EX: CHICAGO, US");
 		timeZone = clockUtil.getTimeZoneFromCityName(city);
+		ggg.put(city, timeZone);
 
 		Calendar calendar = Calendar.getInstance(timeZone);
 		String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
@@ -69,10 +72,16 @@ public class WorldClocks implements ActionListener {
 		// Sample starter program
 		frame = new JFrame();
 		panel = new JPanel();
+		
 		textArea = new JTextArea();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setSize(100, 100);
+		frame.setBackground(Color.DARK_GRAY);
+		panel.setBackground(Color.BLACK);
+		textArea.setBackground(Color.GRAY);
+		textArea.setSelectedTextColor(Color.white);
+		frame.setTitle("WORLD CLOCK");
 		frame.add(panel);
 		panel.add(textArea);
 		panel.add(button);
@@ -95,7 +104,7 @@ public class WorldClocks implements ActionListener {
 		String month = c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
 		String dayOfWeek = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
 		dateStr = dayOfWeek + " " + month + " " + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.YEAR);
-		System.out.println(timeStr);
+		//System.out.println(timeStr);
 		textArea.setText(city + "\n" + dateStr + "\n" + timeStr);
 		frame.pack();
 
@@ -104,8 +113,9 @@ public class WorldClocks implements ActionListener {
 			city = JOptionPane.showInputDialog("Enter a City, then country, all caps. EX: CHICAGO, US");
 			timeZone = clockUtil.getTimeZoneFromCityName(city);
 			ggg.put(city, timeZone);
-
-//textArea+=ss;
+for(String i: ggg.keySet());
+jjjj+=""+ggg;
+textArea.setText(city + "\n" + dateStr);
 		}
 	}
 }
