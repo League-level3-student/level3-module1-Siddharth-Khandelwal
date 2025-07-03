@@ -42,13 +42,14 @@ public class WorldClocks implements ActionListener {
 	ClockUtilities clockUtil;
 	Timer timer;
 	TimeZone timeZone;
-	HashMap<String, TimeZone> ggg = new HashMap<String, TimeZone>();
+	HashMap<String, TimeZone> allCities = new HashMap<String, TimeZone>();
 	JFrame frame;
 	JPanel panel;
 	JTextArea textArea;
 	JButton button = new JButton("Add City");
 
 	String city;
+	String cit1;
 	String dateStr;
 	String timeStr;
 	String jjjj = "";
@@ -59,7 +60,7 @@ public class WorldClocks implements ActionListener {
 		// The format for the city must be: city, country (all caps)
 		city = JOptionPane.showInputDialog("Enter a City, then country, all caps. EX: CHICAGO, US");
 		timeZone = clockUtil.getTimeZoneFromCityName(city);
-		ggg.put(city, timeZone);
+		allCities.put(city, timeZone);
 
 		Calendar calendar = Calendar.getInstance(timeZone);
 		String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
@@ -83,8 +84,8 @@ public class WorldClocks implements ActionListener {
 		textArea.setSelectedTextColor(Color.white);
 		frame.setTitle("WORLD CLOCK");
 		frame.add(panel);
-		panel.add(textArea);
 		panel.add(button);
+		panel.add(textArea);
 		button.addActionListener(this);
 		textArea.setText(city + "\n" + dateStr);
 
@@ -109,13 +110,17 @@ public class WorldClocks implements ActionListener {
 		frame.pack();
 
 		if (arg0.getSource() == button) {
-			String ss = city + "\n" + dateStr;
-			city = JOptionPane.showInputDialog("Enter a City, then country, all caps. EX: CHICAGO, US");
-			timeZone = clockUtil.getTimeZoneFromCityName(city);
-			ggg.put(city, timeZone);
-for(String i: ggg.keySet());
-jjjj+=""+ggg;
-textArea.setText(city + "\n" + dateStr);
+			JTextArea newTA = new JTextArea();
+			String ss = cit1 + "\n" + dateStr;
+			cit1 = JOptionPane.showInputDialog("Enter a City, then country, all caps. EX: CHICAGO, US");
+			timeZone = clockUtil.getTimeZoneFromCityName(cit1);
+			allCities.put(cit1, timeZone);
+for(String i: allCities.keySet());
+jjjj += "" + allCities;
+panel.add(newTA);
+newTA.setText(cit1 + "\n" + dateStr + "\n" + timeStr);
+newTA.setBackground(Color.GRAY);
+newTA.setSelectedTextColor(Color.white);
 		}
 	}
 }
