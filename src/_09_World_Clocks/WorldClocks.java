@@ -73,7 +73,7 @@ public class WorldClocks implements ActionListener {
 		// Sample starter program
 		frame = new JFrame();
 		panel = new JPanel();
-		
+
 		textArea = new JTextArea();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -81,7 +81,7 @@ public class WorldClocks implements ActionListener {
 		frame.setBackground(Color.DARK_GRAY);
 		panel.setBackground(Color.BLACK);
 		textArea.setBackground(Color.GRAY);
-		textArea.setSelectedTextColor(Color.white);
+		textArea.setForeground(Color.white);
 		frame.setTitle("WORLD CLOCK");
 		frame.add(panel);
 		panel.add(button);
@@ -97,30 +97,37 @@ public class WorldClocks implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		Calendar c = Calendar.getInstance(timeZone);
-		String militaryTime = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
-		String twelveHourTime = " [" + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + ":"
-				+ c.get(Calendar.SECOND) + "]";
-		timeStr = militaryTime + twelveHourTime;
-		String month = c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-		String dayOfWeek = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
-		dateStr = dayOfWeek + " " + month + " " + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.YEAR);
-		//System.out.println(timeStr);
-		textArea.setText(city + "\n" + dateStr + "\n" + timeStr);
-		frame.pack();
 
 		if (arg0.getSource() == button) {
 			JTextArea newTA = new JTextArea();
-			String ss = cit1 + "\n" + dateStr;
+
 			cit1 = JOptionPane.showInputDialog("Enter a City, then country, all caps. EX: CHICAGO, US");
 			timeZone = clockUtil.getTimeZoneFromCityName(cit1);
 			allCities.put(cit1, timeZone);
-for(String i: allCities.keySet());
-jjjj += "" + allCities;
-panel.add(newTA);
-newTA.setText(cit1 + "\n" + dateStr + "\n" + timeStr);
-newTA.setBackground(Color.GRAY);
-newTA.setSelectedTextColor(Color.white);
+
+		} else {
+			panel.removeAll();
+			panel.add(button);
+			for (String lebron : allCities.keySet()) {
+
+				Calendar c = Calendar.getInstance(allCities.get(lebron));
+				String militaryTime = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":"
+						+ c.get(Calendar.SECOND);
+				String twelveHourTime = " [" + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + ":"
+						+ c.get(Calendar.SECOND) + "]";
+				timeStr = militaryTime + twelveHourTime;
+				String month = c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+				String dayOfWeek = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+				dateStr = dayOfWeek + " " + month + " " + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.YEAR);
+				// System.out.println(timeStr);
+				JTextArea mbappe = new JTextArea();
+				mbappe.setText(lebron + "\n" + dateStr + "\n" + timeStr);
+				panel.add(mbappe);
+				mbappe.setBackground(Color.GRAY);
+				mbappe.setForeground(Color.white);
+			}
+			frame.pack();
 		}
+		
 	}
 }
